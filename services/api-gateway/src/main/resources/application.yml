@@ -42,3 +42,9 @@ management:
     health:
       probes:
         enabled: true
+
+security:
+  jwt:
+    issuer: ${AUTH_JWT_ISSUER:http://localhost:8084}
+    audience: ${AUTH_JWT_AUDIENCE:ecommerce-platform}
+    jwk-set-uri: ${AUTH_JWK_SET_URI:http://localhost:8084/.well-known/jwks.json}

@@ -18,12 +18,14 @@ The service connects only as `cms_writer`; it does not use a PostgreSQL administ
 
 ## Run locally
 
-Start PostgreSQL and the Discovery Server, then run from the repository root:
+Start PostgreSQL, Discovery Server, and Auth Service, then run CMS by itself from the repository root:
 
 ```powershell
 $env:CMS_WRITER_PASSWORD = "<your local cms_writer password>"
-mvn -pl services/cms-service -am spring-boot:run
+mvn -pl services/cms-service spring-boot:run
 ```
+
+If Maven reports that `common-lib` is missing from the local repository, install the reactor dependencies first with `mvn -pl services/cms-service -am install -DskipTests`, then rerun the standalone command. Do not combine `-am` with `spring-boot:run`.
 
 CMS listens on `http://localhost:8083` by default and registers as `cms-service`. The API Gateway already routes `/api/v1/admin/catalog/**` to this service.
 
@@ -90,14 +92,15 @@ Updates use the same body and require `expectedVersion`, copied from the latest 
 - Flyway owns schema creation and migration. No cross-service foreign keys are created.
 - Product writes, audit entries, and version snapshots share one transaction.
 - Product price uses `BigDecimal`; flexible attributes and history snapshots use PostgreSQL `JSONB`.
-- Audit actors are recorded as `system` for this local Phase 5 implementation. Phase 6 must replace that with the authenticated principal and restrict write access to `ADMIN` and `CONTENT_MANAGER`.
-- JWT authorization is not part of Phase 5. Keep the service and gateway in local development until Phase 6 adds authentication and role checks.
+- Audit actors use the authenticated JWT subject; service-layer operations without a request context use `system`.
+- Both CMS and the gateway validate JWT issuer, audience, and signature. Catalog endpoints are restricted to `ADMIN` and `CONTENT_MANAGER`.
+- Set `AUTH_JWT_ISSUER`, `AUTH_JWT_AUDIENCE`, and `AUTH_JWK_SET_URI` consistently with Auth Service.
 - The transactional outbox and Kafka publishing are intentionally deferred to Phase 8.
 
 ## Verify
 
 ```powershell
-mvn -pl services/cms-service -am test
+mvn -pl services/auth-service,services/api-gateway,services/cms-service -am test
 ```
 
-Request validation tests run without Docker. The PostgreSQL/Flyway integration test uses Testcontainers and is skipped when Docker is unavailable.
+Request validation, JWT-key, and gateway request-context tests run without Docker. PostgreSQL/Flyway integration tests use Testcontainers and are skipped when Docker is unavailable.
