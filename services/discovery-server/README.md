@@ -1,5 +1,13 @@
-# discovery-server
+# Discovery Server
 
-Planned for Phase 4.
+Eureka registry for service registration and discovery. This server does not register with or fetch from itself.
 
-This module will host the Eureka Discovery Server for service registration and health visibility.
+## Run
+
+From the repository root:
+
+```bash
+mvn -pl services/discovery-server spring-boot:run
+```
+
+The Eureka dashboard is available at `http://localhost:8761`. Health is exposed at `/actuator/health`.

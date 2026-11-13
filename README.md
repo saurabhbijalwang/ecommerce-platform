@@ -4,9 +4,7 @@ This repository is being built in phases as described in the project prompt.
 
 ## Current phase
 
-Phases 1 and 2 establish the architecture and Maven/shared-module foundation. Phase 3 adds local Docker/PostgreSQL infrastructure.
-
-Service implementation and the remaining infrastructure will be added in later phases.
+Phase 4 implements the Eureka Discovery Server and reactive API Gateway. PostgreSQL initialization is present, while the rest of the Phase 3 Docker infrastructure remains in progress.
 
 ## Phase 1 deliverables
 
@@ -31,6 +29,6 @@ The platform follows a domain-driven microservices model with independent servic
 
 ## Service layout
 
-The repository contains skeleton service directories under [services/](services/), each planned for separate Maven modules in later phases.
+Implemented Phase 4 services live under [services/](services/); remaining services are still planned for later phases.
 
 For local PostgreSQL setup, follow [Phase 3 local setup](docs/phase-3-local-setup.md).
