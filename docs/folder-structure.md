@@ -4,13 +4,22 @@
 EcommercePlatform/
 ├── README.md
 ├── prompt.md
+├── .env.example
+├── docker-compose.yml
 ├── docs/
 │   ├── architecture/
 │   │   ├── phase-1-architecture.md
 │   │   ├── mermaid-diagrams.md
 │   │   ├── service-responsibilities.md
 │   │   └── database-ownership.md
-│   └── folder-structure.md
+│   ├── environment-variables.md
+│   ├── folder-structure.md
+│   └── phase-3-local-setup.md
+├── infrastructure/
+│   └── postgres/
+│       ├── README.md
+│       └── init/
+│           └── 00-init-databases.sh
 ├── services/
 │   ├── discovery-server/
 │   │   └── README.md

@@ -12,3 +12,7 @@ target/
 **/.settings/
 **/.idea/
 **/.vscode/
+.env
+.env.*
+!.env.example
+docker-compose.override.yml
