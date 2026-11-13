@@ -1,0 +1,19 @@
+{
+  "type": "record",
+  "name": "ProductCatalogEvent",
+  "namespace": "com.ecommerce.avro",
+  "fields": [
+    { "name": "eventId", "type": "string" },
+    { "name": "eventType", "type": {
+      "type": "enum",
+      "name": "CatalogEventType",
+      "symbols": ["PRODUCT_CREATED", "PRODUCT_UPDATED", "PRODUCT_DELETED", "PRODUCT_UNPUBLISHED"]
+    } },
+    { "name": "productId", "type": "string" },
+    { "name": "sku", "type": "string" },
+    { "name": "source", "type": "string" },
+    { "name": "tenantId", "type": ["null", "string"], "default": null },
+    { "name": "occurredAt", "type": { "type": "long", "logicalType": "timestamp-millis" } },
+    { "name": "payload", "type": { "type": "map", "values": "string" } }
+  ]
+}
